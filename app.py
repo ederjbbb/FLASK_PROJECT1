@@ -20,9 +20,8 @@ def create_task():
     
     task_id_control += 1
     tasks.append(new_task)
-    print(tasks)
     return jsonify({
-        "message": "Nova tarfa criada com sucesso"
+        "message": "Nova tarfa criada com sucesso","id":new_task.id
     })
         
     
@@ -59,7 +58,7 @@ def update_task(id):
     task.description = data['description']
     task.completedd = data['completed']
     
-    return jsonify({"message ": "Tarefa atualizada"})
+    return jsonify({"message": "Tarefa atualizada"})
 
 @app.route('/tasks/<int:id>', methods=['DELETE'])
 def delete_task(id):
