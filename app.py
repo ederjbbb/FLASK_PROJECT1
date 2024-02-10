@@ -44,6 +44,37 @@ def get_task_by_id(id):
     
     return jsonify(output)
 
+@app.route('/tasks/<int:id>', methods=['PUT'])
+def update_task(id):
+    task = None
+    for t in tasks:
+        if t.id == id:
+            task = t
+            break
+    if task == None:
+        return jsonify({"Esta tarefa nao goi encontrada "}), 404
+    
+    data = request.get_json()
+    task.title = data['title']
+    task.description = data['description']
+    task.completedd = data['completed']
+    
+    return jsonify({"message ": "Tarefa atualizada"})
+
+@app.route('/tasks/<int:id>', methods=['DELETE'])
+def delete_task(id):
+    task = None
+    for t in tasks:
+        if t.id == id:
+            task = t
+            break
+            
+    if not task:
+        return jsonify({"message":"Esta tarefa nao goi encontrada ou ja foi removida"}), 404
+    
+    tasks.remove(task)
+    return jsonify({"message ": "Tarefa removida "})
+
 if __name__ == "__main__":
     app.run(debug=True)
 
